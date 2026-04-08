@@ -1,0 +1,114 @@
+/**
+ * globals.css — apps/web/src/styles/globals.css
+ *
+ * Aquí se definen los valores concretos de los design tokens como
+ * CSS custom properties (variables CSS). Tailwind consume estas variables
+ * a través de la configuración en tailwind.config.ts.
+ *
+ * Por qué CSS variables en lugar de valores hardcodeados en Tailwind:
+ * - Permiten theming en runtime (modo oscuro sin reload)
+ * - Pueden ser modificadas por JavaScript si es necesario
+ * - Son más fáciles de inspeccionar y debuggear en DevTools
+ *
+ * Los valores usan el formato HSL sin la función hsl().
+ * Tailwind los envuelve en hsl() según la configuración en tailwind.config.ts.
+ * Esto permite ajustar la opacidad sin definir variantes adicionales.
+ * Ejemplo: bg-surface-base/50 genera background con 50% de opacidad.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- Superficies (light mode) --- */
+    --surface-base:       0 0% 100%;      /* blanco */
+    --surface-elevated:   0 0% 98%;       /* ligeramente gris */
+    --surface-overlay:    220 13% 91%;    /* overlay de modales */
+    --surface-brand:      220 90% 56%;    /* azul primario */
+    --surface-brand-hover:220 90% 48%;    /* azul más oscuro en hover */
+    --surface-danger:     0 84% 60%;
+    --surface-success:    142 76% 36%;
+    --surface-warning:    38 92% 50%;
+
+    /* --- Contenido (light mode) --- */
+    --content-primary:    220 20% 10%;    /* casi negro */
+    --content-secondary:  220 10% 40%;    /* gris medio */
+    --content-tertiary:   220 8% 60%;     /* gris claro */
+    --content-disabled:   220 8% 75%;
+    --content-inverse:    0 0% 100%;      /* blanco (sobre fondos oscuros) */
+    --content-brand:      220 90% 56%;
+    --content-danger:     0 84% 60%;
+    --content-success:    142 76% 36%;
+
+    /* --- Bordes (light mode) --- */
+    --border-subtle:      220 13% 91%;
+    --border-default:     220 13% 82%;
+    --border-strong:      220 13% 65%;
+    --border-brand:       220 90% 56%;
+    --border-danger:      0 84% 60%;
+
+    /* --- Tipografía --- */
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+    /* --- Radio global --- */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* --- Superficies (dark mode) --- */
+    --surface-base:       220 20% 10%;
+    --surface-elevated:   220 18% 14%;
+    --surface-overlay:    220 15% 20%;
+    --surface-brand:      220 90% 60%;
+    --surface-brand-hover:220 90% 68%;
+    --surface-danger:     0 72% 51%;
+    --surface-success:    142 76% 36%;
+    --surface-warning:    38 92% 50%;
+
+    /* --- Contenido (dark mode) --- */
+    --content-primary:    220 20% 95%;
+    --content-secondary:  220 10% 70%;
+    --content-tertiary:   220 8% 50%;
+    --content-disabled:   220 8% 35%;
+    --content-inverse:    220 20% 10%;
+    --content-brand:      220 90% 75%;
+    --content-danger:     0 84% 70%;
+    --content-success:    142 76% 55%;
+
+    /* --- Bordes (dark mode) --- */
+    --border-subtle:      220 15% 20%;
+    --border-default:     220 13% 28%;
+    --border-strong:      220 13% 45%;
+    --border-brand:       220 90% 60%;
+    --border-danger:      0 72% 51%;
+  }
+
+  /* --- Reset y estilos base --- */
+
+  * {
+    border-color: hsl(var(--border-default));
+  }
+
+  body {
+    background-color: hsl(var(--surface-base));
+    color: hsl(var(--content-primary));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus visible accesible — WCAG 2.1 AA */
+  :focus-visible {
+    outline: 2px solid hsl(var(--border-brand));
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+
+  /* Eliminar el outline default solo cuando hay :focus-visible disponible */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
